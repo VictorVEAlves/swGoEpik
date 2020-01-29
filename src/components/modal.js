@@ -3,7 +3,6 @@ import { Modal, Button } from 'react-bootstrap';
 
 export class CharacterModal extends React.Component {
     render() {
-        console.log('aqui', this.props);
         return (
             <Modal
                 {...this.props}

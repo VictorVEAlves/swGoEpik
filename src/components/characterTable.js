@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { fetchCharacters, fetchSpecies } from "../store/characterActions";
 import MaterialTable from 'material-table';
 import {CharacterModal} from './modal.js';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 class CharacterTable extends React.Component {
 
@@ -11,11 +13,10 @@ class CharacterTable extends React.Component {
   }
 
   getCharacterById(data) {
-    let specie = this.props.dispatch(fetchSpecies(data.species));    
+    this.props.dispatch(fetchSpecies(data.species)).then(specie => this.setState({specie: specie}));    
     this.setState({
       showModal: true,
       character: data,
-      specie: specie
     })
   }
 
@@ -42,6 +43,10 @@ class CharacterTable extends React.Component {
           title="Star Wars"
           columns={columns}
           data={characters}
+          options={{
+            pageSize: 10
+          }}
+          
           actions={[{
               icon: 'edit',
               tooltip: 'Visualizar',
@@ -66,5 +71,21 @@ const mapStateToProps = state => ({
   error: state.error,
   specie: state.specie
 });
+
+// const CharacterQuery = gql`
+//   query {
+//     result {
+//       count
+//       next
+//       previous
+//       results
+//     }
+//   }
+// `;
+
+
+// export default graphql(CharacterQuery, {
+//   name: 'Characters'
+// })(CharacterTable)
 
 export default connect(mapStateToProps)(CharacterTable);
