@@ -58,7 +58,7 @@ class CharacterTable extends React.Component {
           }}
 
           actions={[{
-            icon: 'edit',
+            icon: 'chevron_right',
             tooltip: 'Visualizar',
             onClick: (event, rowData) => this.getCharacterById(rowData),
           }
